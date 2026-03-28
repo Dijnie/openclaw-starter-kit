@@ -1,0 +1,42 @@
+{
+  "name": "OpenClaw Dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
+
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+
+  // Forward gateway and bridge ports
+  "forwardPorts": [18789, 18790],
+  "portsAttributes": {
+    "18789": { "label": "OpenClaw Gateway", "onAutoForward": "notify" },
+    "18790": { "label": "OpenClaw Bridge", "onAutoForward": "notify" }
+  },
+
+  "containerEnv": {
+    "OPENCLAW_STATE_DIR": "/home/node/.openclaw"
+  },
+
+  // Clone openclaw repo and install dependencies
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "GitHub.copilot",
+        "ms-toolsai.jupyter"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "typescript.tsdk": "openclaw/node_modules/typescript/lib"
+      }
+    }
+  },
+
+  "remoteUser": "node"
+}
